@@ -1,0 +1,128 @@
+📄 INSTRUKCJA – BOOKSY TRACKER
+Ten plik mówi Ci dokładnie co zrobić krok po kroku.
+Nie pomijaj żadnego kroku, a wszystko zadziała.
+
+1. Przygotowanie plików
+Na swoim komputerze stwórz nowy folder o nazwie booksy-tracker.
+
+Skopiuj do niego wszystkie pliki, które Ci podałem:
+
+booksy_tracker.py
+
+requirements.txt
+
+.env.example
+
+client_secrets.json (na razie pusty)
+
+seen_businesses.json (pusty z [])
+
+INSTRUKCJA.txt (czytasz go teraz)
+
+Zaznacz cały folder i kliknij Prawy przycisk → Wyślij do → Folder skompresowany (ZIP).
+
+Nazwij ZIP np. booksy-tracker.zip.
+
+2. Utworzenie konta GitHub
+Wejdź na https://github.com
+
+Kliknij Sign up (zarejestruj się).
+
+Potwierdź e-mail.
+
+Po zalogowaniu kliknij New repository (Nowe repozytorium).
+
+Nazwij je np. booksy-tracker.
+
+Ustaw Public.
+
+Kliknij Create repository.
+
+3. Wgranie plików na GitHub
+Wejdź do nowego repozytorium.
+
+Kliknij Add file → Upload files.
+
+Przeciągnij tam plik ZIP lub wszystkie pliki z folderu.
+
+Kliknij Commit changes (zatwierdź zmiany).
+
+4. Konto Railway (uruchomienie w chmurze)
+Wejdź na https://railway.app
+
+Zarejestruj się (najprościej przez GitHub).
+
+Kliknij New Project → Deploy from GitHub repo.
+
+Wybierz repozytorium booksy-tracker.
+
+Railway automatycznie pobierze kod.
+
+5. Ustawienie zmiennych środowiskowych
+W Railway wejdź w swój projekt → Variables.
+
+Dodaj te zmienne (dokładnie tak jak w .env.example):
+
+GMAIL_USER – Twój adres Gmail.
+
+GMAIL_PASS – Hasło aplikacji Gmail (nie zwykłe hasło!).
+
+DRIVE_FOLDER_ID – ID folderu na Google Drive.
+
+📌 Jak zdobyć hasło aplikacji Gmail:
+
+Wejdź w https://myaccount.google.com/apppasswords
+
+Zaloguj się.
+
+Utwórz nowe hasło aplikacji, wybierz "Inne (custom name)", wpisz np. "Booksy Tracker".
+
+Skopiuj wygenerowane hasło i wklej do GMAIL_PASS.
+
+6. Google Drive API
+Wejdź na https://console.cloud.google.com
+
+Utwórz nowy projekt, np. Booksy Tracker.
+
+Włącz Google Drive API.
+
+W Service Accounts utwórz nowy klucz JSON i pobierz go.
+
+Zapisz go w pliku client_secrets.json w swoim repozytorium.
+
+W Google Drive stwórz folder, gdzie będą lądować raporty.
+
+Kliknij PPM → Udostępnij → dodaj e-mail z pliku JSON jako edytora.
+
+Skopiuj ID folderu z adresu URL (ciąg znaków między /folders/ a końcem).
+
+Wklej to ID do zmiennej DRIVE_FOLDER_ID w Railway.
+
+7. Harmonogram działania
+Skrypt ma już ustawione:
+
+Codziennie o 08:00
+
+Codziennie o 20:00
+
+Railway utrzyma go w działaniu cały czas.
+
+8. Pierwsze uruchomienie
+Po ustawieniu wszystkiego kliknij Deploy w Railway.
+
+Otwórz zakładkę Logs i zobacz, czy pojawia się komunikat:
+
+nginx
+Kopiuj
+Edytuj
+Tracker uruchomiony. Oczekiwanie na zaplanowane godziny...
+O wyznaczonych godzinach dostaniesz e-mail z raportem PDF, a plik pojawi się w Google Drive.
+
+9. Ważne uwagi
+Pierwsze uruchomienie zapisze dużo biznesów, bo jeszcze nie ma historii.
+
+Następne uruchomienia pokażą tylko nowe wpisy.
+
+Jeśli chcesz wyczyścić pamięć, usuń plik seen_businesses.json w Railway.
+
+Jeśli Booksy zmieni strukturę strony, trzeba będzie dostosować kod.
