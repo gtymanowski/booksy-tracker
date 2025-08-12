@@ -31,9 +31,14 @@ def save_seen(seen):
         json.dump(list(seen), f, ensure_ascii=False)
 
 def get_all_categories():
-    url = "https://booksy.com/pl-pl/api/public/categories"
-    resp = requests.get(url)
+    url = "https://pl.booksy.com/api/pl_PL/categories"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+    }
+    resp = requests.get(url, headers=headers)
+    resp.raise_for_status()  # jeśli status != 200, wyrzuć błąd
     return [cat["slug"] for cat in resp.json()]
+
 
 def fetch_new_businesses():
     seen = load_seen()
@@ -112,3 +117,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
