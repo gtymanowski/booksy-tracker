@@ -30,14 +30,32 @@ def save_seen(seen):
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(list(seen), f, ensure_ascii=False)
 
+import requests
+import json
+
 def get_all_categories():
     url = "https://pl.booksy.com/api/pl_PL/categories"
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
+        "Accept": "application/json, text/javascript, */*; q=0.01",
+        "Referer": "https://pl.booksy.com/",
     }
-    resp = requests.get(url, headers=headers)
-    resp.raise_for_status()  # jeśli status != 200, wyrzuć błąd
-    return [cat["slug"] for cat in resp.json()]
+    try:
+        resp = requests.get(url, headers=headers)
+        resp.raise_for_status()
+        print("Response status:", resp.status_code)
+        print("Response text:", resp.text[:500])  # wyświetl pierwsze 500 znaków odpowiedzi
+        data = resp.json()
+        return [cat["slug"] for cat in data]
+    except requests.HTTPError as e:
+        print(f"Błąd HTTP: {e}")
+    except json.JSONDecodeError:
+        print("Odpowiedź nie jest poprawnym JSONem:")
+        print(resp.text)
+    except Exception as e:
+        print(f"Inny błąd: {e}")
+    return []
+
 
 
 def fetch_new_businesses():
@@ -117,4 +135,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
